@@ -10,9 +10,9 @@ public class P003_구간_합_구하기 {
 		int[] numArr = new int[n];
 		int[] sumArr = new int[n];
 		
-		for(int i=0; i<n; i++) {
-			numArr[i] = (i==0) ? 0 : sc.nextInt();
-			sumArr[i] = (i==0) ? 0 : numArr[i] + sumArr[i-1];
+		for(int i=1; i<n; i++) {
+			numArr[i] = sc.nextInt();
+			sumArr[i] = numArr[i] + sumArr[i-1];
 		}
 
 		for(int i=0; i<m; i++) {

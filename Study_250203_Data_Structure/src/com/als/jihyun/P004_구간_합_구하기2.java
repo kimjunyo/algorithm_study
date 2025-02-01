@@ -10,23 +10,21 @@ public class P004_구간_합_구하기2 {
 		int[][] numArr = new int[n][n];
 		int[][] sumArr = new int[n][n];
 		
-		for(int i=0; i<n; i++) {
-			for(int j=0; j<n; j++) {
-				numArr[i][j] = (i==0 || j==0) ? 0 : sc.nextInt();
-				sumArr[i][j] = (i==0 || j==0) ? 0 : numArr[i][j] + sumArr[i][j-1];
+		for(int i=1; i<n; i++) {
+			for(int j=1; j<n; j++) {
+				numArr[i][j] = sc.nextInt();
+				sumArr[i][j] = sumArr[i-1][j] + sumArr[i][j-1] - sumArr[i-1][j-1] + numArr[i][j]; 
 			}
 		}
 		
 		for(int i=0; i<m; i++) {	
-			int[] coor = new int[4];
-			for(int j=0; j<4; j++) {
+			int[] coor = new int[5];
+			for(int j=1; j<=4; j++) {
 				coor[j] = sc.nextInt();
 			}
-
-			int sum =0;
-			for(int j = coor[0]; j<=coor[2]; j++) {
-				sum += sumArr[j][coor[3]]-sumArr[j][coor[1]-1];
-			}
+			int sum = sumArr[coor[3]][coor[4]]  + sumArr[coor[1]-1][coor[2]-1]
+					- sumArr[coor[3]][coor[2]-1] - sumArr[coor[1]-1][coor[4]];
+			
 			System.out.println(sum);
 		}
 	}

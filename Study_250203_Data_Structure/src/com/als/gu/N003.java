@@ -11,15 +11,22 @@ public class N003 {
 		
 		int[] arr = new int[N];
 		
-		for (int i = 0; i < N; i++) arr[i] = sc.nextInt();
+        int[] sumArr = new int[N];
+        int total = 0;
+		for (int i = 0; i < N; i++) {
+            arr[i] = sc.nextInt();
+            sumArr[i] = (total += arr[i]);
+        }
+        
 		for (int i = 0; i < M; i++) {
 			int s = sc.nextInt();
 			int e = sc.nextInt();
-			int sum = 0;
-			for (int j = 0; j < e-s+1; j++) {
-				sum += arr[s-1+j];
-			}
-			System.out.println(sum);
+			
+			int end = e-1;
+			int start = s-2;
+			
+			if (s-2 < 0) System.out.println(sumArr[end]);
+			else System.out.println(sumArr[end] - sumArr[start]);
 		}
 	}
 }

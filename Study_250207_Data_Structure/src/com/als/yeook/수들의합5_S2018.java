@@ -22,14 +22,17 @@ public class 수들의합5_S2018 {
 		int count = 1;
 		int sum = arr[0];
 		while (endIndex < n-1) {
+			//현재 범위내 합이 조건에 맞으면 count++;
 			if (sum == n) {
 				count++;
 				endIndex++;
 				sum+=arr[endIndex];
 
+			//조건보다 크면 start이동.
 			} else if (sum > n) {
 				sum -= arr[startIndex];
 				startIndex++;
+			//조건보다 작으면 end이동
 			}else {
 				endIndex++;
 				sum+=arr[endIndex];

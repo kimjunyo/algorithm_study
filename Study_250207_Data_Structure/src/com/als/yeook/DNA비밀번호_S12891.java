@@ -28,14 +28,16 @@ public class DNA비밀번호_S12891 {
 		 for(int i = 0;i<4;i++) {
 			 minimunCount[i]=Integer.parseInt(st.nextToken());
 		 }
-
+		
+		//맨 처음 윈도우의 각 ACGT갯수 저장.
 		 int start = 0;
 		 int end=m-1;
-		for(int i = 0;i<m;i++) {
+		 for(int i = 0;i<m;i++) {
 			curCount=addcount(arr[i], curCount);
 		}
 		 
 		 for(int i = end;i<arr.length;i++) {
+			 //현재 윈도우가 조건에 맞는지 확인 후 total++
 			 boolean isPossible=true;
 			 for(int j = 0;j<4;j++) {
 				 if(curCount[j]<minimunCount[j]) {
@@ -45,8 +47,9 @@ public class DNA비밀번호_S12891 {
 			 }
 			 if(isPossible)total++;
 			 if(i==arr.length-1)break;
+			
+			//윈도우 이동하며 새로운 윈도우의 ACGT 갯수 업데이트.
 			 end++;
-
 			 char c = arr[end];
 			 curCount=removecount(arr[start],curCount);
 			 start++;

@@ -2,7 +2,7 @@ package com.als.yeook;
 import java.util.*;
 import java.io.*;
 
-//슬라이딩 윈도우를 ArrayList로 만들어서 했더니 add메서드가 시간복잡도n이라 시간초과남.
+//슬라이딩 윈도우를 ArrayList로 만들어서 했더니 remove메서드로 시간초과남.
 public class DNA비밀번호_S12891 {
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

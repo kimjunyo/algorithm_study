@@ -19,8 +19,6 @@ public class 최솟값찾기_P11003 {
 		}
 		StringBuilder result = new StringBuilder();
 		Deque<int[]> deque=new ArrayDeque<>();//{index,num}
-		int start = 0;
-		int end = m-1;
 		
 		for(int i=0;i<n;i++) {
 			int num=arr[i];

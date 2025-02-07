@@ -19,6 +19,8 @@ public class P010_11003_최솟값찾기 {
 			arr[i] = Integer.parseInt(st.nextToken());
 		}
 
+		///////////// solve 못했습니다 /////////////
+
 		long[] answer = new long[N];
 		long min = 1000000000;
 		long secondMin = 1000000000;

@@ -19,7 +19,7 @@ public class P008_좋다 {
 		for (int i = 0; i < arr.length; i++) {
 			for (int j = 0; j < arr.length; j++) {
 				if(i == j) continue;
-				int index = 0;
+				
 				int start = i;
 				int end = j;
 				
@@ -28,20 +28,13 @@ public class P008_좋다 {
 					end = i;	
 				}
 				
-				index = Arrays.binarySearch(arr, 0, start, arr[i] - arr[j]);
-				if(index >= 0) {
-					count++;
-					break;
-				}
+				int index1 = Arrays.binarySearch(arr, 0, start, arr[i] - arr[j]);
 				
-				index = Arrays.binarySearch(arr, start + 1, end, arr[i] - arr[j]);
-				if(index >= 0) {
-					count++;
-					break;
-				}
+				int index2 = Arrays.binarySearch(arr, start + 1, end, arr[i] - arr[j]);
 				
-				index = Arrays.binarySearch(arr, end + 1, arr.length, arr[i] - arr[j]);
-				if(index >= 0) {
+				int index3 = Arrays.binarySearch(arr, end + 1, arr.length, arr[i] - arr[j]);
+				
+				if(index1 >= 0 || index2 >= 0 || index3 >= 0) {
 					count++;
 					break;
 				}

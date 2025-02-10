@@ -43,8 +43,6 @@ public class P009_12891_DNA비밀번호 {
 			dnaCnt[arr[i - P]]--;
 			dnaCnt[arr[i]]++;
 			
-			if(dnaCnt[arr[i-P]] >= a)
-			
 			if(dnaCnt[65] >= a && dnaCnt[67] >= c && dnaCnt[71] >= g && dnaCnt[84] >= t) {
 				answer++;
 			}

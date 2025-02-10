@@ -17,10 +17,12 @@ public class 주몽_S1940 {
 		for(int i = 0;i<n;i++) {
 			arr[i]= Integer.parseInt(st.nextToken());
 		}
-		
+		//갑옷들 정렬
 		Arrays.sort(arr);
 		int startIndex=0;
 		int endIndex = n-1;
+
+		//두 수의 합이 조건에 맞는지 순회.
 		int sum=arr[startIndex]+arr[endIndex];
 		int count=0;
 		while(startIndex<endIndex) {

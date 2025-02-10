@@ -30,6 +30,9 @@ public class P010_11003_최솟값찾기 {
 				thirdMin = secondMin;
 				secondMin = min;
 				min = arr[i];
+			}else if(arr[i] < secondMin){
+				thirdMin = secondMin;
+				secondMin = arr[i];
 			}
 			answer[i] = min;
 		}
@@ -49,7 +52,12 @@ public class P010_11003_최솟값찾기 {
 					min = arr[i]; 
 				}
 			}
+			answer[i] = min;
 		}
+		
+		// 마지막 L개의 index 최솟값 구하기
+		
+		
 
 		for (long l : answer) {
 			System.out.print(l + " ");

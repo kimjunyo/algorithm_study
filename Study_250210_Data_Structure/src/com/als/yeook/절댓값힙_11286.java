@@ -16,6 +16,16 @@ public class 절댓값힙_11286 {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		// 우선순위 큐만들고 절댓값을 기준으로 저장하기.
 		PriorityQueue<Integer> heap = new PriorityQueue<>(new CompareAbs());
+		//람다식 
+		/*
+		 PriorityQueue<Integer> heap = new PriorityQueue<>((a,b)->{if (num != 0) heap.offer(num);
+		else {
+		Integer pop = heap.poll();
+		if (pop != null) result.append(pop).append("\n");
+		else result.append("0\n");
+		}});
+		
+		*/
 		StringBuilder result = new StringBuilder();
 
 		int n = Integer.parseInt(st.nextToken());

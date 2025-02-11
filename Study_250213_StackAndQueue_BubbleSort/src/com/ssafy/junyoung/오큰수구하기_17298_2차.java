@@ -7,13 +7,13 @@ import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class 오큰수구하기_17298_2차 {
+	static Stack<Node> stack = new Stack<>();
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
 		int N = Integer.parseInt(st.nextToken());
 		
-		Stack<Node> stack = new Stack<>();
 		int idx = 0;
 		
 		st = new StringTokenizer(br.readLine());
@@ -29,11 +29,13 @@ public class 오큰수구하기_17298_2차 {
 			
 			stack.add(new Node(idx++, num));
 		}
+		StringBuilder sb = new StringBuilder();
 		
 		for(int i : result) {
-			if(i==0) System.out.print(-1 + " ");
-			else System.out.print(i + " ");
+			if(i==0) sb.append(-1).append(" ");
+			else sb.append(i).append(" ");
 		}
+		System.out.println(sb);
 	}
 
 	static class Node {

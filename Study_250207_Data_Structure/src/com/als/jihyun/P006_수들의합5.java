@@ -1,6 +1,8 @@
+package com.als.jihyun;
+
 import java.util.Scanner;
 
-public class Main {
+public class P006_수들의합5 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		//왜 스캐너냐면,,,,강의실에서 풀을 안했,,,,,,^_ㅠ

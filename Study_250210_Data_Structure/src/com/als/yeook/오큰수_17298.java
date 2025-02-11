@@ -1,4 +1,4 @@
-package 알고리즘;
+package com.als.yeook;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;

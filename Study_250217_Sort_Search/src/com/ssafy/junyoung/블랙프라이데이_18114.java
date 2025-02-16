@@ -1,4 +1,4 @@
-package 블랙프라이데이;
+package com.ssafy.junyoung;
 
 import java.io.BufferedReader;
 import java.io.IOException;

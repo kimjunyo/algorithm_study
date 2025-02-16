@@ -1,4 +1,4 @@
-package 스터디;
+package com.ssafy.yeook;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

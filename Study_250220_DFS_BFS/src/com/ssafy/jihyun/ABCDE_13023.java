@@ -1,4 +1,4 @@
-package baekjoon;
+package src.com.ssafy.jihyun;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class BOJ_13023_ABCDE {
+public class ABCDE_13023 {
 	
 	static List<Integer>[] friend;
 	static boolean[] visited;

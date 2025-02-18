@@ -1,4 +1,4 @@
-package baekjoon;
+package src.com.ssafy.jihyun;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.StringTokenizer;
 
-public class BOJ_2178_미로_탐색2 {
+public class 미로탐색_2178 {
 	
 	static int N;
 	static int M;

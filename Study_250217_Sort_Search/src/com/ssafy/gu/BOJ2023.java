@@ -1,3 +1,5 @@
+package com.ssafy.gu;
+
 import java.util.Scanner;
 
 public class BOJ2023 {

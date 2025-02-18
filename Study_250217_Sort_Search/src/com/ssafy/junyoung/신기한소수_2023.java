@@ -1,3 +1,5 @@
+package com.ssafy.junyoung;
+
 import java.util.Scanner;
 
 public class 신기한소수_2023 {

@@ -88,7 +88,7 @@ public class BOJ_2023_신기한_소수 {
 */
 
 //DFS
-package baekjoon;
+package com.ssafy.jihyun;
 
 import java.util.Scanner;
 

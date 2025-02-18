@@ -1,4 +1,4 @@
-package baekjoon;
+package com.ssafy.siyeong;
 
 import java.util.Scanner;
 

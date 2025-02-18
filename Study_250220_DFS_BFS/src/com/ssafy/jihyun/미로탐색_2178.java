@@ -1,4 +1,4 @@
-package src.com.ssafy.jihyun;
+package com.ssafy.jihyun;
 
 import java.io.BufferedReader;
 import java.io.IOException;

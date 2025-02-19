@@ -12,12 +12,12 @@ public class PN_18114_블랙프라이데이 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int N = Integer.parseInt(st.nextToken());
+		int N = Integer.parseInt(st.nextToken()) + 1;
 		int C = Integer.parseInt(st.nextToken());
 
 		st = new StringTokenizer(br.readLine());
 		int[] products = new int[N];
-		for (int i = 0; i < N; i++) {
+		for (int i = 1; i < N; i++) {
 			products[i] = Integer.parseInt(st.nextToken());
 			if (products[i] == C) {
 				System.out.println(1);
@@ -26,24 +26,21 @@ public class PN_18114_블랙프라이데이 {
 		}
 
 		Arrays.sort(products);
-		int temp = 0;
+		int weight = 0;
+		int start = 0;
+		int end = N - 1;
 		for (int i = 0; i < N - 2; i++) {
-			for (int j = i + 1; j < N - 1; j++) {
-				temp = products[i] + products[j];
-				if (temp == C) {
+			weight = C - products[i];
+			start = i + 1;
+			end = N - 1;
+			while(start < end) {
+				if(products[start] + products[end] > weight) {
+					end--;
+				}else if(products[start] + products[end] < weight) {
+					start++;
+				}else {
 					System.out.println(1);
 					return;
-				} else if (temp > C) {
-					break;
-				} else {
-					for (int k = j + 1; k < N; k++) {
-						if (products[k] == C - temp) {
-							System.out.println(1);
-							return;
-						} else if (products[k] > C - temp) {
-							break;
-						}
-					}
 				}
 			}
 		}

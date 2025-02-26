@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.PriorityQueue;
+import java.util.Comparator;
 import java.util.StringTokenizer;
 
 public class P35_1931_회의실배정하기 {
@@ -12,50 +12,31 @@ public class P35_1931_회의실배정하기 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = null;
 		int N = Integer.parseInt(br.readLine().trim());
-		int[] start = new int[N];
-		int[] end = new int[N];
-		int maxStart = 0;
-//		int minEnd = Integer.MAX_VALUE;
-//		int maxEnd = 0;
+		int[][] arr = new int[N][2];
 		for (int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
-			start[i] = Integer.parseInt(st.nextToken());
-			end[i] = Integer.parseInt(st.nextToken());
-			if (maxStart < start[i]) {
-				maxStart = start[i];
-			}
-//			if(maxEnd < end[i]) {
-//				maxEnd = end[i];
-//			}
-//			if(minEnd > end[i]) {
-//				minEnd = end[i];
-//			}
+			arr[i][0] = Integer.parseInt(st.nextToken());
+			arr[i][1] = Integer.parseInt(st.nextToken());
 		}
 
-		// 끝나는 시간 기준으로 리스트
-		PriorityQueue<Integer>[] pqArr = new PriorityQueue[end[end.length - 1] + 1];
-		for (int i = 0; i < end[end.length - 1] + 1; i++) {
-			pqArr[i] = new PriorityQueue<Integer>();
-		}
-		for (int i = 0; i < N; i++) {
-			pqArr[end[i]].add(start[i]);
-		}
+		Arrays.sort(arr, new Comparator<int[]>() {
 
-		Arrays.sort(end);
-		int idx = 0;
-		int cnt = 1;
-		pass:
-		while (end[idx] <= maxStart) {
-			for (int endIdx = idx + 1; endIdx < end.length - 1; endIdx++) {
-				for (int startTime : pqArr[end[endIdx]]) {
-					if (startTime >= end[idx]) {
-						idx = endIdx;
-						cnt++;
-						continue pass;
-					}
+			@Override
+			public int compare(int[] o1, int[] o2) {
+				if (o1[1] == o2[1]) {
+					return o1[0] - o2[0];
 				}
+				return o1[1] - o2[1];
 			}
-			break;
+		});
+
+		int now = arr[0][1];
+		int cnt = 1;
+		for (int i = 1; i < N; i++) {
+			if (arr[i][0] >= now) {
+				now = arr[i][1];
+				cnt++;
+			}
 		}
 		System.out.println(cnt);
 	}

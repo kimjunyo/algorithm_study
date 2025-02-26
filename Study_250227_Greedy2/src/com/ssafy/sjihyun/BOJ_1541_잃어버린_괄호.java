@@ -1,4 +1,4 @@
-package baekjoon.r2_silver;
+package com.ssafy.sjihyun;
 
 import java.io.BufferedReader;
 import java.io.IOException;

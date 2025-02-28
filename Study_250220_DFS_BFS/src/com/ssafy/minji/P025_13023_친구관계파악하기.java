@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class P25_13023_친구관계파악하기 {
+public class P025_13023_친구관계파악하기 {
 	static List<Integer>[] nodesPerNode;
 	static boolean[] visited;
 	static boolean exists;

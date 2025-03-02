@@ -8,63 +8,29 @@ public class P039_1747_소수팰린드롬 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int N = Integer.parseInt(sc.nextLine().trim());
+		if(N == 1) {
+			System.out.println(2);
+			return;
+		}
 		String num = "";
 
-		int[] arr = new int[1000001];
-		arr[0] = 1;
-		arr[1] = 1;
-		for (int i = N; i <= 1000000; i++) {
-			for (int j = i * 2; j <= 1000000; j += i) {
-				arr[j] = 1;
-			}
-		}
+		List<Integer> prime = new ArrayList<Integer>();
 
-		List<Integer> prime = new ArrayList<>();
-		for (int i = N; i <= 1000000; i++) {
-			if (arr[i] == 0) {
-				prime.add(i);
-			}
-		}
-		List<Integer> primePalin = new ArrayList<>();
-		int maxPP = 0;
-		for (int p : prime) {
-			num = p + "";
-			for (int i = 0; i <= (num.length() - 1) / 2; i++) {
-				if (num.charAt(i) != num.charAt(num.length() - 1 - i)) {
-					break;
+		nextNum: for (int i = N; i <= 1003001; i++) {
+			for (int j = 2; j <= Math.sqrt(i); j++) {
+				if (i % j == 0) {
+					continue nextNum;
 				}
 			}
-			primePalin.add(p);
-			maxPP = Math.max(maxPP, p);
-		}
-		System.out.println(maxPP);
-
-		if (N <= maxPP) {
-			for (int p : primePalin) {
-				if (p >= N) {
-					System.out.println(p);
-					return;
+			prime.add(i);
+			num = i + "";
+			for (int j = 0; j <= (num.length() - 1) / 2; j++) {
+				if (num.charAt(j) != num.charAt(num.length() - 1 - j)) {
+					continue nextNum;
 				}
 			}
-		}
-		
-		int over = 1000001;
-		nextLong: while (true) {
-			for (int i : prime) {
-				if (over % i == 0) {
-					over++;
-					continue nextLong;
-				}
-			}
-			num = over + "";
-			for (int i = 0; i <= (num.length() - 1) / 2; i++) {
-				if (num.charAt(i) != num.charAt(num.length() - 1 - i)) {
-					over++;
-					continue nextLong;
-				}
-			}
-			System.out.println(over);
-			break;
+			System.out.println(i);
+			return;
 		}
 	}
 }

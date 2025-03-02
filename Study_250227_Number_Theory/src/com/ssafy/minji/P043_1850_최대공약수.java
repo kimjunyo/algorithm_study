@@ -18,8 +18,6 @@ public class P043_1850_최대공약수 {
 			M = temp;
 		}
 		
-//		long n = makeNum(N);
-//		long m = makeNum(M);
 		while(true) {
 			if(N % M == 0) {
 				break;

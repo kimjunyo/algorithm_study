@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,25 +12,15 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class P18352_특정거리의도시찾기 {
-	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	static StringTokenizer st;
-	static int N;
-	static int M;
-	static int K;
-	static int X;
-	static List<Integer>[] list;
-	static List<Integer> ansList;
-	static boolean[] visited;
-	static Queue<Integer> que;
-
 	public static void main(String[] args) throws IOException {
-		st = new StringTokenizer(br.readLine());
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
-		K = Integer.parseInt(st.nextToken());
-		X = Integer.parseInt(st.nextToken());
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int N = Integer.parseInt(st.nextToken());
+		int M = Integer.parseInt(st.nextToken());
+		int K = Integer.parseInt(st.nextToken());
+		int X = Integer.parseInt(st.nextToken());
 
-		list = new List[N + 1];
+		List<Integer>[] list = new List[N + 1];
 		for (int i = 1; i <= N; i++) {
 			list[i] = new ArrayList<>();
 		}
@@ -39,11 +30,28 @@ public class P18352_특정거리의도시찾기 {
 			list[Integer.parseInt(st.nextToken())].add(Integer.parseInt(st.nextToken()));
 		}
 
-		ansList = new ArrayList<>();
-		visited = new boolean[N + 1];
-		visited[X] = true;
-		que = new LinkedList<>();
-		trip(X, 0);
+		List<Integer> ansList = new ArrayList<>();
+		int[] distance = new int[N + 1];
+		Arrays.fill(distance, -1);
+
+		Queue<Integer> que = new LinkedList<>();
+		que.add(X);
+		distance[X] = 0;
+		while (!que.isEmpty()) {
+			int curr = que.poll();
+			for (int i : list[curr]) {
+				if (distance[i] == -1) {
+					distance[i] = distance[curr] + 1;
+					que.add(i);
+				}
+			}
+		}
+
+		for (int i = 1; i <= N; i++) {
+			if (i != X && distance[i] == K) {
+				ansList.add(i);
+			}
+		}
 
 		if (ansList.isEmpty()) {
 			System.out.println(-1);
@@ -59,30 +67,4 @@ public class P18352_특정거리의도시찾기 {
 			}
 		}
 	}
-
-	static void trip(int idx, int cnt) {
-//		if (visited[idx]) {
-//			return;
-//		} else {
-//			visited[idx] = true;
-//		}
-
-		if (cnt == K) {
-			ansList.add(idx);
-			return;
-		}
-
-		for (int i : list[idx]) {
-			if (!visited[i]) {
-				visited[i] = true;
-				que.add(i);
-			}
-		}
-
-		while (!que.isEmpty()) {
-			trip(que.poll(), cnt + 1);
-		}
-
-	}
-
 }

@@ -3,17 +3,16 @@ package com.ssafy.minji;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.TreeSet;
 
 public class P2251_물통 {
 	static int A;
 	static int B;
 	static int C;
-	static List<Integer> cases;
-	static List<Integer> result;
+	static Set<String> cases;
+	static Set<Integer> result;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -23,17 +22,9 @@ public class P2251_물통 {
 		B = Integer.parseInt(st.nextToken());
 		C = Integer.parseInt(st.nextToken());
 
-		cases = new ArrayList<>();
-		result = new ArrayList<>();
+		cases = new TreeSet<>();
+		result = new TreeSet<>();
 		water(0, 0, C);
-		
-		result.sort(new Comparator<Integer>() {
-
-			@Override
-			public int compare(Integer o1, Integer o2) {
-				return o1 - o2;
-			}
-		});
 		
 		for(int i : result) {
 			System.out.print(i + " ");
@@ -41,7 +32,7 @@ public class P2251_물통 {
 	}
 
 	static void water(int a, int b, int c) {
-		int str = Integer.parseInt((a + "") + (b + "") + (c + ""));
+		String str = a + "," + b + "," + c;
 		if (cases.contains(str)) {
 			return;
 		}
@@ -86,7 +77,7 @@ public class P2251_물통 {
 	}
 	
 	static int[] move(int maxTo, int to, int from) {
-		if(to + from < maxTo) {
+		if(to + from <= maxTo) {
 			to = to + from;
 			from = 0;
 		}else {

@@ -10,12 +10,9 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 public class 물통_2251 {
-	public static int a;
-	public static int b;
-	public static int c;
-	public static int[] arr;
+	public static int a, b, c;
 	public static Set<String> visit;
-	public static Queue<Integer> needtovisit;
+	public static Queue<int[]> needtovisit;
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -24,83 +21,49 @@ public class 물통_2251 {
 		b = Integer.parseInt(st.nextToken());
 		c = Integer.parseInt(st.nextToken());
 
-		// 물의 용량 저장.
-		arr = new int[3];
-		arr[2] = c;
-
 		visit = new HashSet<>();
 		needtovisit = new LinkedList<>();
-		for (int i = 1; i <= 6; i++) {
-			needtovisit.add(i);
-		}
-		Set<Integer> result = new HashSet<>();
-		visit.add(Arrays.toString(arr));
-		while (!needtovisit.isEmpty()) {
-			int deque = needtovisit.poll();
-			if (arr[0] == 0) {
-				result.add(arr[2]);
-			}
-			if (move(deque)) {
-				needtovisit.add(deque);
-			}
-			;
-		}
-		Integer[] r = result.toArray(new Integer[0]);
 
-		Arrays.sort(r);
+		Set<Integer> result = new TreeSet<>();
+
+		needtovisit.add(new int[] { 0, 0, c });
+		visit.add("0 0 " + c);
+
+		while (!needtovisit.isEmpty()) {
+			int[] arr = needtovisit.poll();
+			int x = arr[0], y = arr[1], z = arr[2];
+
+			if (x == 0) {
+				result.add(z);
+			}
+
+			// 가능한 모든 물 이동 시도
+			move(needtovisit, visit, arr, x, y, z, a, b, 0, 1); // A -> B
+			move(needtovisit, visit, arr, x, y, z, a, c, 0, 2); // A -> C
+			move(needtovisit, visit, arr, x, y, z, b, a, 1, 0); // B -> A
+			move(needtovisit, visit, arr, x, y, z, b, c, 1, 2); // B -> C
+			move(needtovisit, visit, arr, x, y, z, c, a, 2, 0); // C -> A
+			move(needtovisit, visit, arr, x, y, z, c, b, 2, 1); // C -> B
+		}
 
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < r.length; i++) {
-			sb.append(r[i]).append(" ");
+		for (int num : result) {
+			sb.append(num).append(" ");
 		}
 		System.out.println(sb.toString().trim());
-
-	}// main
-
-	public static boolean move(int num) {
-		int[] arr2 = Arrays.copyOf(arr, 3);
-		switch (num) {
-		// c->b
-		case 1:
-			return change(arr2, b, 2, 1);
-
-		// c->a
-		case 2:
-			return change(arr2, a, 2, 0);
-
-		// b->c
-		case 3:
-			return change(arr2, c, 1, 2);
-		// b->a
-		case 4:
-			return change(arr2, a, 1, 0);
-		// a->c
-		case 5:
-			return change(arr2, c, 0, 2);
-
-		// a->b
-		case 6:
-			return change(arr2, b, 0, 1);
-
-		default:
-			return false;
-		}
 	}
 
-	public static boolean change(int[] arr2, int capacity, int from, int to) {
-		if (capacity - arr2[to] >= arr2[from]) {
-			arr2[to] += arr2[from];
-			arr2[from] = 0;
-		} else {
-			arr2[from] -= (capacity - arr2[to]);
-			arr2[to] = capacity;
-		}
-		if (!visit.contains(Arrays.toString(arr2))) {
-			visit.add(Arrays.toString(arr2));
-			arr = arr2;
-			return true;
-		}
-		return false;
-	}
+	public static void move(Queue<int[]> queue, Set<String> visit, int[] arr, int x, int y, int z, int fromCap,
+			int toCap, int from, int to) {
+		int[] next = arr.clone();
+		int amount = Math.min(next[from], toCap - next[to]); // 이동해야할 물의양
+		next[from] -= amount; // 이동해야할 물의 양 빼기.
+		next[to] += amount; // 물이동시키기.
 
+		String state = next[0] + " " + next[1] + " " + next[2];
+		if (!visit.contains(state)) { // 물통상태 저장하기.똑같은 경우 있으면 굳이 할필요없음.)
+			visit.add(state);
+			queue.add(next);
+		}
+	}
 }

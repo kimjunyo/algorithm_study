@@ -62,6 +62,7 @@ public class 효율적인해킹_1325 {
 			int x = q.poll();
 			for (int next : list[x]) {
 				if (!visited[next]) {
+					visited[next] = true;
 					q.add(next);
 					count++;
 				}

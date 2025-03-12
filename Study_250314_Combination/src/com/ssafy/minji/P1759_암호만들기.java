@@ -28,7 +28,7 @@ public class P1759_암호만들기 {
 
 		result = new ArrayList<>();
 
-		comb(0, 0, new ArrayList<>(), false);
+		comb(0, 0, new ArrayList<>(), false, 0);
 
 		for (int i = result.size() - 1; i >= 0; i--) {
 			for (char c : result.get(i)) {
@@ -39,8 +39,8 @@ public class P1759_암호만들기 {
 
 	}
 
-	static void comb(int idx, int cnt, List list, boolean contains) {
-		if (cnt == L && contains) {
+	static void comb(int idx, int cnt, List list, boolean contains, int notVow) {
+		if (cnt == L && contains && notVow >= 2) {
 			result.add(new ArrayList<>(list));
 			return;
 		}
@@ -49,11 +49,13 @@ public class P1759_암호만들기 {
 			return;
 		}
 
-		comb(idx + 1, cnt, new ArrayList<>(list), contains);
+		comb(idx + 1, cnt, new ArrayList<>(list), contains, notVow);
 		list.add(arr[idx]);
 		if (arr[idx] == 'a' || arr[idx] == 'e' || arr[idx] == 'i' || arr[idx] == 'o' || arr[idx] == 'u') {
 			contains = true;
+		}else {
+			notVow++;
 		}
-		comb(idx + 1, cnt + 1, new ArrayList<>(list), contains);
+		comb(idx + 1, cnt + 1, new ArrayList<>(list), contains,notVow);
 	}
 }

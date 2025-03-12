@@ -6,10 +6,14 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class P11051_이항계수구하기 {
+	// ????
+	// (n C k) = (n-1 C k-1) + (n-1 C k)
+
 	static int N;
 	static int K;
-	static long[] dp;
+	static long[][] dp;	// ????? 나는 이걸 도무지 모르겠소
 
+	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -21,20 +25,11 @@ public class P11051_이항계수구하기 {
 			return;
 		}
 
-		dp = new long[N + 1];
-		dp[1] = 1;
-		calc(2);
-
-		System.out.println((dp[N] / (dp[K] * dp[N - K])) % 10007);
+		dp = new long[N + 1][K + 1];
 
 	}
 
-	static void calc(int idx) {
-		if(idx > N) {
-			return;
-		}
-		dp[idx] = (((idx - 1) % 10007) * (idx % 10007)) % 10007;
-		System.out.println(idx + " , " + dp[idx]);
-		calc(idx + 1);
+	static void calc(int idxN, int idxK) {
+		
 	}
 }

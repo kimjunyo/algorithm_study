@@ -1,4 +1,4 @@
-package dd;
+package com.ssafy.yeook;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -33,6 +33,5 @@ public class BOJ_9095_123_더하기 {
         }
 
         System.out.print(sb);
-        br.close();
     }
 }

@@ -2,7 +2,7 @@ package com.ssafy.siyeong;
 
 import java.util.Scanner;
 
-public class 고층건물_1027 {
+public class 퇴사_14501 {
 	static int[] dp;
 	static int N;
 	static int[][] arr;

@@ -1,3 +1,5 @@
+package com.ssafy.siyeong;
+
 import java.util.Arrays;
 import java.util.Scanner;
 

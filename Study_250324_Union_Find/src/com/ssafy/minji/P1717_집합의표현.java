@@ -7,12 +7,11 @@ import java.util.StringTokenizer;
 
 public class P1717_집합의표현 {
 	static int[] arr;
-	static int n;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		n = Integer.parseInt(st.nextToken());
+		int n = Integer.parseInt(st.nextToken());
 		int m = Integer.parseInt(st.nextToken());
 		arr = new int[n + 1];
 		for (int i = 0; i <= n; i++) {

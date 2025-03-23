@@ -1,4 +1,4 @@
-package 일23더하기;
+package com.ssafy.junyoung;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

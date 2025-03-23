@@ -1,4 +1,4 @@
-package 이곱하기n타일링_11726;
+package com.ssafy.junyoung;
 
 import java.util.Scanner;
 

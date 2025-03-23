@@ -1,4 +1,4 @@
-package unionfind;
+package com.ssafy.kyungmin;
 
 import java.io.BufferedReader;
 import java.io.IOException;

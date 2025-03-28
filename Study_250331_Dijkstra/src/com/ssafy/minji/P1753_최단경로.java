@@ -1,4 +1,4 @@
-package src.com.ssafy.minji;
+package com.ssafy.minji;
 
 import java.io.BufferedReader;
 import java.io.IOException;

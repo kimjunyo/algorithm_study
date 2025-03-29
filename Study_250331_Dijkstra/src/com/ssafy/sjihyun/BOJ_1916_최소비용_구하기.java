@@ -4,70 +4,64 @@ import java.io.*;
 import java.util.*;
 
 public class BOJ_1916_최소비용_구하기 {
-	static List<int[]>[] graph;
+	
+	static List<Edge>[] graph;
 	static int[] costArr;
 	
-	private static void findMinCost(int sNode) {
-		PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
-			@Override
-			public int compare(int[] o1, int[] o2) {
-				return o1[1] - o2[1];
-			}
-		});
-		
-		int currNode = sNode, currCost = 0;
-		pq.add(new int[] {currNode, currCost});
+	private static class Edge{
+		int to,cost;
+		public Edge(int to, int cost) {
+			this.to = to;
+			this.cost = cost;
+		}
+	}
+	
+	private static int findMinCost(int start, int end) {
+		PriorityQueue<Edge> pq = new PriorityQueue<>((e1,e2) -> Integer.compare(e1.cost, e2.cost));
+		costArr[start] = 0;
+		pq.add(new Edge(start,costArr[start]));
 		
 		while(!pq.isEmpty()) {
-			int[] info = pq.poll();
-			currNode = info[0]; currCost = info[1];
+			Edge curr = pq.poll();
 			
-			if(currCost > costArr[currNode]) continue;
+			if(curr.cost > costArr[curr.to]) continue;
 			
-			for(int[] n : graph[currNode]) {
-				int nextNode = n[0], nextCost = n[1] + currCost;
-				
-				if(nextCost < costArr[nextNode]) {
-					costArr[nextNode] = nextCost;
-					pq.offer(new int[] {nextNode, nextCost});
+			for(Edge next : graph[curr.to]) {
+				if(costArr[next.to] > costArr[curr.to] + next.cost) {
+					costArr[next.to] = costArr[curr.to] + next.cost;
+					pq.add(new Edge(next.to, costArr[next.to]));
 				}
 			}
 		}
+		return costArr[end];
 	}
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
-		
-		int N = Integer.parseInt(br.readLine()); // 도시의 개수 
-		int M = Integer.parseInt(br.readLine()); // 버스의 개수 
+		int N = Integer.parseInt(br.readLine());
+		int M = Integer.parseInt(br.readLine());
 		
 		graph = new ArrayList[N+1];
 		costArr = new int[N+1];
-		for(int i=0; i<N+1; i++) {
-			graph[i] = new ArrayList<>();
-			costArr[i] = Integer.MAX_VALUE;
+		for(int i=0; i<=N; i++) {
+		    graph[i] = new ArrayList<>();
+		    costArr[i] = Integer.MAX_VALUE;
 		}
+
 		for(int i=0; i<M; i++) {
-			st = new StringTokenizer(br.readLine());
-			
-			int u = Integer.parseInt(st.nextToken());
-			int v = Integer.parseInt(st.nextToken());
+			st=new StringTokenizer(br.readLine());
+			int from = Integer.parseInt(st.nextToken());
+			int to = Integer.parseInt(st.nextToken());
 			int cost = Integer.parseInt(st.nextToken());
-			
-			graph[u].add(new int[] {v, cost});
-		} //그래프 완
-		
-		st = new StringTokenizer(br.readLine());
-		int sNode = Integer.parseInt(st.nextToken());
-		int eNode = Integer.parseInt(st.nextToken());
-		
-		if(sNode == eNode) {
-			System.out.println(0);
-			return;
+			graph[from].add(new Edge(to, cost));
 		}
 		
-		findMinCost(sNode);
-		System.out.println(costArr[eNode]);
+		st= new StringTokenizer(br.readLine());
+		int start = Integer.parseInt(st.nextToken());
+		int end = Integer.parseInt(st.nextToken());
+		
+		int result = findMinCost(start, end); 
+		System.out.println(result);            
 	}
 }

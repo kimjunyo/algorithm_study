@@ -1,0 +1,79 @@
+package com.ssafy.siyeong;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
+
+public class 최시영_최소비용구하기_1916 {
+    static class Edge implements Comparable<Edge> {
+        int to, cost;
+
+        public Edge(int to, int cost) {
+            this.to = to;
+            this.cost = cost;
+        }
+
+        public int compareTo(Edge o) {
+            return Integer.compare(this.cost, o.cost);
+        }
+    }
+
+    static int N, M;
+    static List<Edge>[] adj;
+    static int[] dist;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+
+        N = Integer.parseInt(br.readLine());
+        M = Integer.parseInt(br.readLine());
+
+        adj = new ArrayList[N + 1];
+        for (int i = 1; i <= N; i++) {
+            adj[i] = new ArrayList<>();
+        }
+
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(br.readLine());
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            int w = Integer.parseInt(st.nextToken());
+            adj[u].add(new Edge(v, w));
+        }
+
+        st = new StringTokenizer(br.readLine());
+        int start = Integer.parseInt(st.nextToken());
+        int end = Integer.parseInt(st.nextToken());
+
+        dist = new int[N + 1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dijkstra(start);
+
+        System.out.println(dist[end]);
+    }
+
+    private static void dijkstra(int start) {
+        PriorityQueue<Edge> pq = new PriorityQueue<>();
+        pq.offer(new Edge(start, 0));
+        dist[start] = 0;
+
+        while (!pq.isEmpty()) {
+            Edge now = pq.poll();
+
+            if (dist[now.to] < now.cost) continue;
+
+            for (Edge next : adj[now.to]) {
+                if (dist[next.to] > dist[now.to] + next.cost) {
+                    dist[next.to] = dist[now.to] + next.cost;
+                    pq.offer(new Edge(next.to, dist[next.to]));
+                }
+            }
+        }
+    }
+}

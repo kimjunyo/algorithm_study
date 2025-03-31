@@ -1,4 +1,4 @@
-package baekjoon.r3_gold;
+package com.ssafy.sjihyun;
 
 import java.io.*;
 import java.util.*;

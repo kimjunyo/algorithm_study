@@ -1,0 +1,46 @@
+package com.ssafy.gu;
+
+import java.util.*;
+
+class Solution {
+    class Bridge {
+        int to, length;
+        Bridge(int to, int length) {
+            this.to = to;
+            this.length = length;
+        }
+    }
+    
+    public int solution(int n, int[][] costs) {
+        int answer = 0;
+        List<Bridge> adj[] = new ArrayList[n];
+        for (int i = 0; i < n; i++) {
+            adj[i] = new ArrayList<>();
+        }
+        
+        for (int i = 0; i < costs.length; i++) {
+            adj[costs[i][0]].add(new Bridge(costs[i][1], costs[i][2]));
+            adj[costs[i][1]].add(new Bridge(costs[i][0], costs[i][2]));
+        }
+        
+        PriorityQueue<Bridge> pq = new PriorityQueue<>((a, b) -> a.length - b.length);
+        boolean[] visited = new boolean[n];
+        pq.add(new Bridge(0, 0));
+        
+        int pick = 0;
+        while (!pq.isEmpty()) {
+            Bridge curr = pq.poll();
+            if (visited[curr.to]) continue;
+            visited[curr.to] = true;
+            answer += curr.length;
+            
+            if (++pick == n) return answer;
+            
+            for (Bridge b : adj[curr.to]) {
+                if (visited[b.to]) continue;
+                pq.add(b);
+            }
+        }
+        return -1;
+    }
+}

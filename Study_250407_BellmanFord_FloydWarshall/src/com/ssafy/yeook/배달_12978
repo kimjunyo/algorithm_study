@@ -1,0 +1,49 @@
+import java.util.*;
+class Solution {
+    public int solution(int N, int[][] road, int K) {
+        int [] shortestPath = new int[N+1];
+        List<int[]>[] adjs = new ArrayList[N+1];
+        for(int i = 1;i<=N;i++){
+            shortestPath[i] = Integer.MAX_VALUE;
+            adjs[i] = new ArrayList<int[]>();
+        }
+        shortestPath[1] = 0;
+        
+        for(int i = 0;i<road.length;i++){
+            int a = road[i][0];
+            int b = road[i][1];
+            int w = road[i][2];
+            adjs[a].add(new int[]{b,w});
+            adjs[b].add(new int[]{a,w});
+        }//인접정점 저장.
+        boolean[] isPossible = new boolean[N+1];
+        Queue<int[]> needtovisit = new ArrayDeque<>();
+        needtovisit.add(new int[]{1,0});
+        while(!needtovisit.isEmpty()){
+            int []deque = needtovisit.poll();
+            int num = deque[0];
+            int dis = deque[1];
+            if(dis<=K){
+                isPossible[num]=true;
+            }else{
+                continue;
+            }
+            for(int[] adj : adjs[num]){
+                int adjn = adj[0];
+                int adjd = adj[1];
+                if(dis+adjd < shortestPath[adjn]){
+                    shortestPath[adjn] = dis+adjd;
+                    needtovisit.add(new int[]{adjn,shortestPath[adjn]});
+                }
+            }
+        }//while
+        int answer = 0;
+        for(int i = 1;i<=N;i++){
+            if(isPossible[i]){
+                answer++;
+            }
+        }
+
+        return answer;
+    }
+}

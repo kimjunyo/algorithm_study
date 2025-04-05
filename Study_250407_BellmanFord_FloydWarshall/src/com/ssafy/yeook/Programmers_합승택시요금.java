@@ -1,3 +1,4 @@
+package com.ssafy.yeook;
 class Solution {
 	static final int INF = Integer.MAX_VALUE;
 

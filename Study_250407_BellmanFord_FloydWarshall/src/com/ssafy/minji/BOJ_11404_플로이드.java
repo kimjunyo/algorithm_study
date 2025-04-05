@@ -13,9 +13,6 @@ public class BOJ_11404_플로이드 {
 		StringTokenizer st = null;
 		int N = Integer.parseInt(br.readLine().trim());
 		int M = Integer.parseInt(br.readLine().trim());
-//		StringTokenizer st = new StringTokenizer(br.readLine());
-//		int N = Integer.parseInt(st.nextToken());
-//		int M = Integer.parseInt(st.nextToken());
 
 		final int INF = 1000_000_000;
 		long[][] dist = new long[N + 1][N + 1];

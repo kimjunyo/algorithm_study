@@ -3,7 +3,7 @@ import java.util.*;
 class Solution {
     class Road {
         int to, time;
-        new Road(int to, int time) {
+        Road(int to, int time) {
             this.to = to;
             this.time = time;
         }
@@ -21,18 +21,30 @@ class Solution {
         }
         
         int[] dist = new int[N+1];
+        boolean[] visited = new boolean[N+1];
         Arrays.fill(dist, Integer.MAX_VALUE);
-        dist[1] = 0;
         
         PriorityQueue<Road> pq = new PriorityQueue<>((a, b) -> a.time - b.time);
-        pq.add(new Road(0, 0));
+        pq.add(new Road(1, 0));
         
-        while (!pq.isEmpty) {
+        while (!pq.isEmpty()) {
             Road curr = pq.poll();
-            curr.
+            if (visited[curr.to]) continue;
+            visited[curr.to] = true;
+            dist[curr.to] = curr.time;
+            for (Road r : adj[curr.to]) {
+                if (!visited[r.to] && dist[r.to] > dist[curr.to] + r.time) {
+                    dist[r.to] = dist[curr.to] + r.time;
+                    pq.add(new Road(r.to, dist[r.to]));
+                }
+            }
         }
         
+        int cnt = 0;
+        for (int time : dist) {
+            if (time <= K) cnt++;
+        }
         
-        return answer;
+        return cnt;
     }
 }

@@ -1,0 +1,90 @@
+package com.ssafy.sjihyun;
+
+import java.io.*;
+import java.util.*;
+
+class Main {
+
+	static int[] node;
+	
+	private static int findNode(int num){
+		if(node[num] == num) return num;
+		return node[num] = findNode(node[num]);
+	}
+
+	private static void unionFind(int num1, int num2){
+		int root1 = findNode(num1);
+		int root2 = findNode(num2);
+		if(root1 < root2) node[root2] = root1;
+		else node[root1] = root2;
+	}
+	
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int N = Integer.parseInt(st.nextToken());
+		int M = Integer.parseInt(st.nextToken());
+
+		node = new int[N + 1];
+		Arrays.setAll(node, i -> i);
+		int[] cnt = new int[N + 1];
+		
+		for(int i = 0; i < M; i++){
+			st = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+			unionFind(a, b);
+			cnt[a]++;
+			cnt[b]++;
+		}
+
+		for (int i = 1; i <= N; i++) {
+			node[i] = findNode(i);
+		}
+
+		int[] cntComputer = new int[N + 1];
+		int[] cntCable = new int[N + 1];
+		int[] minComputer = new int[N + 1];
+		Arrays.fill(minComputer, Integer.MAX_VALUE);
+
+		for(int i = 1; i <= N; i++){
+			int c = node[i]; 
+			cntComputer[c]++;
+			cntCable[c] += cnt[i];
+			minComputer[c] = Math.min(minComputer[c], i);
+		}
+
+		int resultNode = -1;
+		double condition1 = -1.0;
+		int condition2 = Integer.MAX_VALUE;
+		int condition3 = Integer.MAX_VALUE;
+
+		for(int i = 1; i <= N; i++){
+			if(cntComputer[i] == 0) continue;
+
+			int cable = cntCable[i] / 2;
+			int size = cntComputer[i];
+			double density = (double) cable / size;
+			int minNum = minComputer[i];
+
+			if(density > condition1 ||
+			   (density == condition1 && size < condition2) ||
+			   (density == condition1 && size == condition2 && minNum < condition3)) {
+				condition1 = density;
+				condition2 = size;
+				condition3 = minNum;
+				resultNode = i;
+			}
+		}
+
+		List<Integer> result = new ArrayList<>();
+		for(int i = 1; i <= N; i++){
+			if(node[i] == resultNode) result.add(i);
+		}
+		Collections.sort(result);
+
+		StringBuilder sb = new StringBuilder();
+		for(int num : result) sb.append(num).append(" ");
+		System.out.println(sb);
+	}
+}

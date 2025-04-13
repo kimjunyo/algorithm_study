@@ -1,0 +1,45 @@
+package com.ssafy.sjihyun;
+
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		StringTokenizer st;
+
+		int T = Integer.parseInt(br.readLine());
+		for(int tc = 1; tc<=T; tc++){
+			st = new StringTokenizer(br.readLine());
+			int N = Integer.parseInt(st.nextToken());
+			int K = Integer.parseInt(st.nextToken());
+
+			int size = N + K;
+			int[][] map = new int[size][size];
+			int[][] sumMap = new int[size][size];
+			for(int i=K; i<size; i++){
+				st = new StringTokenizer(br.readLine());
+				for(int j=K; j<size; j++){
+					map[i][j] = Integer.parseInt(st.nextToken());
+				}
+			}
+
+			for(int i=K; i<size; i++){
+				for(int j=K; j<size; j++){
+					sumMap[i][j] = sumMap[i-1][j] + sumMap[i][j-1] + map[i][j] - sumMap[i-1][j-1];
+				}
+			}
+
+			int result = Integer.MAX_VALUE;
+			for(int i=K+K-1; i<size; i++){
+				for(int j=K+K-1; j<size; j++){
+						int cal = sumMap[i][j] - sumMap[i-K][j] - sumMap[i][j-K] + sumMap[i-K][j-K];
+						result = Math.min(cal, result);
+				}
+			}
+			sb.append(result).append("\n");
+		}
+		System.out.println(sb);
+	}
+}

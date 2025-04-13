@@ -1,4 +1,4 @@
-package com.ssafy.minji;
+package com.ssafy.gu;
 
 import java.io.*;
 import java.util.*;

@@ -1,0 +1,35 @@
+package com.ssafy.gu;
+
+import java.util.*;
+
+class PRO_다트게임 {
+    public int solution(String dartResult) {
+        int sum = 0;
+        int prev = 0;
+        int now = 0;
+        for (int i = 0; i < dartResult.length(); i++) {
+            char curr = dartResult.charAt(i);
+            if (curr >= '0' && curr <= '9') {
+                sum += prev;
+                prev = now;
+                if (curr == '1' && dartResult.charAt(++i) == '0') {
+                    now = 10;
+                } else {
+                    now = curr - '0';
+                }
+            } else if (curr == 'S') {
+                continue;
+            } else if (curr == 'D') {
+                now *= now;
+            } else if (curr == 'T') {
+                now *= now*now;
+            } else if (curr == '*') {
+                prev *= 2;
+                now *= 2;
+            } else if (curr == '#') {
+                now *= -1;
+            }
+        }
+        return sum+prev+now;
+    }
+}

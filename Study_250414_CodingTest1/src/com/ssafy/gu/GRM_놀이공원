@@ -1,0 +1,39 @@
+package com.ssafy.gu;
+
+import java.io.*;
+import java.util.*;
+
+class GRM_놀이공원 {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int T = Integer.parseInt(br.readLine());
+		for (int t = 0; t < T; t++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			int N = Integer.parseInt(st.nextToken());
+			int K = Integer.parseInt(st.nextToken());
+			int[][] land = new int[N][N];
+			
+			for (int i = 0; i < N; i++) {
+				st = new StringTokenizer(br.readLine());
+				for (int j = 0; j < N; j++) {
+					land[i][j] = Integer.parseInt(st.nextToken());
+				}
+			}
+
+			int min = K*K;
+			for (int i = 0; i < N-K+1; i++) {
+				for (int j = 0; j < N-K+1; j++) {
+					int sum = 0;
+					for (int k = 0; k < K; k++) {
+						for (int l = 0; l < K; l++) {
+							sum += land[i+k][j+l];
+						}
+					}
+					if (min > sum) min = sum;
+				}
+			}
+
+			System.out.println(min);
+		}
+	}
+}

@@ -5,33 +5,34 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 public class SWEA_2382_미생물격리 {
 	static int N;
 	static int M;
 	static int K;
-	/////////////////////// list 안되겠다
-	static List<Integer>[][] map;
-	////////////////////////
+	static Map<Integer, Set<Integer>> map;
 	static int[][] group;
 	static Map<Integer, int[]> dirs;
+	static List<Integer> merge;
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = null;
 		int T = Integer.parseInt(br.readLine().trim());
-		for (int tc = 1; tc < T; tc++) {
+		for (int tc = 1; tc <= T; tc++) {
 			st = new StringTokenizer(br.readLine());
 			N = Integer.parseInt(st.nextToken());
 			M = Integer.parseInt(st.nextToken());
 			K = Integer.parseInt(st.nextToken());
 			
-			map = new List[N][N];
+			map = new HashMap<Integer, Set<Integer>>();
 			for(int i = 0 ; i < N ; i++) {
 				for(int j = 0 ; j < N ; j++) {
-					map[i][j] = new ArrayList<Integer>();
+					map.put(i * N + j, new HashSet<>());
 				}
 			}
 			
@@ -46,30 +47,46 @@ public class SWEA_2382_미생물격리 {
 			
 			for(int i = 0 ; i < K ; i++) {
 				st = new StringTokenizer(br.readLine());
-				for(int j = 0 ; j < K ; j++) {
+				for(int j = 0 ; j < 4 ; j++) {
 					group[i][j] = Integer.parseInt(st.nextToken());
-					map[i][j].add(i);
 				}
+				map.get(group[i][0] * N + group[i][1]).add(i);
 			}
 			
+			merge = new ArrayList<>();
 			for(int time = 1 ; time <= M ; time++ ) {
+				merge.clear();
+				
 				for(int g = 0 ; g < K ; g++) {
 					move(g);
 				}
 				
-				
-				
-				
+				for(int meetPoint : merge) {
+					int maxVal = 0;
+					int maxMicro = -1;
+					for(int microNum : map.get(meetPoint)) {
+						if(maxVal < group[microNum][2]) {
+							maxVal = group[microNum][2];
+							maxMicro = microNum;
+						}
+					}
+					
+					for(int microNum : map.get(meetPoint)) {
+						if(microNum == maxMicro) {
+							continue;
+						}
+						group[maxMicro][2] += group[microNum][2];
+						group[microNum][2] = 0;
+					}
+				}
 			}
 			
+			int microSum = 0;
+			for(int i = 0 ; i < K ; i++) {
+				microSum += group[i][2];
+			}
 			
-			
-			
-			
-			
-			
-			
-			
+			System.out.println("#" + tc + " " + microSum);
 		}
 	}// main
 	
@@ -86,10 +103,12 @@ public class SWEA_2382_미생물격리 {
 		dir = dirs.get(micro[3]);
 		r = micro[0];
 		c = micro[1];
-//		map[r][c].
+		map.get(r * N + c).remove(microNum);
 		
 		r += dir[0];
 		c += dir[1];
+		group[microNum][0] = r;
+		group[microNum][1] = c;
 		
 		if(r == 0 || c == 0 || r == N - 1 || c == N -1) {
 			group[microNum][2] /= 2;
@@ -104,14 +123,10 @@ public class SWEA_2382_미생물격리 {
 				micro[3] = 3;
 			}
 		}
-		
-//		if(map[r][c] != 0) {
-//			mergeNum = map[r][c];
-//			mer
-//			
-//		}
-		
-		
+		map.get(r * N + c).add(microNum);
+		if(map.get(r * N + c).size() > 1) {
+			merge.add(r * N + c);
+		}
 	}
 	
 }

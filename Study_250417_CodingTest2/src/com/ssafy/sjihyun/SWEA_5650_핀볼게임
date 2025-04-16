@@ -110,12 +110,12 @@ public class Solution {
         StringBuilder sb = new StringBuilder();
         StringTokenizer st;
 
-        T = Integer.parseInt(br.readLine().trim());
+        T = Integer.parseInt(br.readLine());
 
         for (int t = 1; t <= T; t++) {
             sb.append("#").append(t).append(" ");
             maxScore = 0;
-            N = Integer.parseInt(br.readLine().trim());
+            N = Integer.parseInt(br.readLine());
             board = new int[N][N];
             wormholes = new ArrayList[11];
 
@@ -124,7 +124,7 @@ public class Solution {
             }
 
             for (int i = 0; i < N; i++) {
-                st = new StringTokenizer(br.readLine().trim());
+                st = new StringTokenizer(br.readLine());
                 for (int j = 0; j < N; j++) {
                     board[i][j] = Integer.parseInt(st.nextToken());
                     if (board[i][j] >= 6 && board[i][j] <= 10) {

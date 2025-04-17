@@ -30,16 +30,6 @@ public class SWEA2382_미생물격리 {
             this.number = number;
             this.dir = dir;
         }
-
-        @Override
-        public String toString() {
-            return "Gyun{" +
-                    "row=" + row +
-                    ", col=" + col +
-                    ", number=" + number +
-                    ", dir=" + dir +
-                    '}';
-        }
     }
 
     public static void main(String[] args) throws IOException {
@@ -85,8 +75,6 @@ public class SWEA2382_미생물격리 {
 
                 Collections.sort(gyuns);
 
-                System.out.println(gyuns);
-
                 List<Gyun> gyunCopy = new ArrayList<>(gyuns);
                 Gyun beforeGyun = null;
                 for(Gyun gyun : gyunCopy) {
@@ -101,6 +89,10 @@ public class SWEA2382_미생물격리 {
                         gyuns.remove(gyun);
                     }
                 }
+                if(beforeGyun != null) {
+                    gyuns.add(beforeGyun);
+                }
+                
             }
 
             int sum = 0;

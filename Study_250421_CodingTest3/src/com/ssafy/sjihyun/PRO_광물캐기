@@ -1,0 +1,76 @@
+package com.ssafy.sjihyun;
+
+import java.util.*;
+
+class Solution {
+
+    private class PicksSet {
+        int dia, iron, stone;
+
+        public PicksSet(int dia, int iron, int stone) {
+            this.dia = dia;
+            this.iron = iron;
+            this.stone = stone;
+        }
+    }
+
+    private PicksSet calculateFatigue(List<String> minerals) {
+        int dia = 0, iron = 0, stone = 0;
+        for (String m : minerals) {
+            switch (m) {
+                case "diamond":
+                    dia += 1;
+                    iron += 5;
+                    stone += 25;
+                    break;
+                case "iron":
+                    dia += 1;
+                    iron += 1;
+                    stone += 5;
+                    break;
+                case "stone":
+                    dia += 1;
+                    iron += 1;
+                    stone += 1;
+                    break;
+            }
+        }
+        return new PicksSet(dia, iron, stone); 
+    }
+
+    public int solution(int[] picks, String[] minerals) {
+        int maxUse = Math.min(minerals.length, (picks[0] + picks[1] + picks[2]) * 5);
+        int stepCnt = (int) Math.ceil((double) maxUse / 5);
+
+        List<String>[] sets = new ArrayList[stepCnt];
+        for (int i = 0; i < stepCnt; i++) {
+            sets[i] = new ArrayList<>();
+        } //초기화
+
+        for (int i = 0; i < maxUse; i++) {
+            sets[i / 5].add(minerals[i]);
+        }
+
+        List<PicksSet> fatigueList = new ArrayList<>();
+        for (int i = 0; i < stepCnt; i++) {
+            fatigueList.add(calculateFatigue(sets[i]));
+        }
+
+        fatigueList.sort((a, b) -> Integer.compare(b.stone, a.stone));
+
+        int totalFatigue = 0, idx = 0;
+
+        for (int i = 0; i < picks[0] && idx < fatigueList.size(); i++) {
+            totalFatigue += fatigueList.get(idx++).dia;
+        }
+
+        for (int i = 0; i < picks[1] && idx < fatigueList.size(); i++) {
+            totalFatigue += fatigueList.get(idx++).iron;
+        }
+
+        for (int i = 0; i < picks[2] && idx < fatigueList.size(); i++) {
+            totalFatigue += fatigueList.get(idx++).stone;
+        }
+        return totalFatigue;
+    }
+}

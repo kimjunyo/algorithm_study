@@ -1,0 +1,51 @@
+import java.util.*;
+
+class Solution {
+    public int[] solution(String[] genres, int[] plays) {
+        Set<String> genreSet = new HashSet<>();
+        Map<String, Integer> genreCnt = new HashMap<>(); 
+        Map<String, List<int[]>> genreSong = new HashMap<>(); 
+        
+        int n = genres.length;
+        for(int i=0; i<n; i++){
+            genreSet.add(genres[i]);
+        }
+        
+        for(String g : genreSet){
+            genreSong.put(g, new ArrayList<>());
+        }
+        
+        for (int i = 0; i < genres.length; i++) {
+            String genre = genres[i];
+            int play = plays[i];
+            int order = i;
+
+            genreCnt.put(genre, genreCnt.getOrDefault(genre, 0) + play);
+            genreSong.get(genre).add(new int[]{order, play});
+        }
+
+        
+        List<String> genreOrder = new ArrayList<>(genreCnt.keySet());
+        genreOrder.sort((a, b) -> Integer.compare(genreCnt.get(b),genreCnt.get(a)));
+
+        List<Integer> result = new ArrayList<>();
+        for (String genre : genreOrder) {
+            List<int[]> songs = genreSong.get(genre);
+            
+            songs.sort((a, b) -> {
+                if (b[1] != a[1]) return Integer.compare(b[1], a[1]);
+                return Integer.compare(a[0], b[0]);
+            });
+
+            result.add(songs.get(0)[0]);
+            if (songs.size() > 1) result.add(songs.get(1)[0]);
+        }
+
+        int size = result.size();
+        int[] answer = new int[size];
+        for(int i=0; i<size; i++){
+            answer[i] = result.get(i);
+        }
+        return answer;
+    }
+}

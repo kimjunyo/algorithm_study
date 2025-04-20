@@ -1,0 +1,40 @@
+import java.util.*;
+
+class UserSolution {
+
+    static class Player {
+        int id, ability;
+
+        public Player(int id, int ability) {
+            this.id = id;
+            this.ability = ability;
+        }
+    }
+
+    List<List<Player>> leagues;
+    int N, L;
+
+    void init(int N, int L, int mAbility[]) {
+        this.N = N;
+        this.L = L;
+        leagues = new ArrayList<>();
+
+        int groupSize = N / L;
+        for (int i = 0; i < L; i++) {
+            leagues.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < N; i++) {
+            int leagueId = i / groupSize;
+            leagues.get(leagueId).add(new Player(i, mAbility[i]));
+        }
+    }
+
+    int move() {
+        return 0;
+    }
+
+    int trade() {
+        return 0;
+    }
+}

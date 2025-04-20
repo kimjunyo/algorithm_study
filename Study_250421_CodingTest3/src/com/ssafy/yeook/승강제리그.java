@@ -68,10 +68,10 @@ class UserSolution {
 	static Node[][] arr;
 
 	void init(int N, int L, int mAbility[]) {
-		n = N;
-		l = L;
-		m = N / L;
-		arr = new Node[l][m];
+		n = N;// 전체 선수의 수 
+		l = L; //전체 리그의 수
+		m = N / L; //각 리그당 선수의 수 
+		arr = new Node[l][m]; //각 리그별(행) 선수들의 ability, id 정보를 저장. 조건에 맞게 정렬하여 저장.
 		int index = 0;
 		for (int i = 0; i < l; i++) {
 			for (int j = 0; j < m; j++) {
@@ -83,8 +83,8 @@ class UserSolution {
 	}// init
 
 	int move() {
-		boolean[] isMove = new boolean[n];
-		int moveSum = 0;
+		boolean[] isMove = new boolean[n]; // 중복 저장 방지용
+		int moveSum = 0; //이동한 선수들의 id의 총합. 
 
 		for (int i = 1; i < l; i++) {
 
@@ -92,7 +92,7 @@ class UserSolution {
 			arr[i - 1][m - 1] = arr[i][0];// 현재 리그의 최고 선수와 자리 바꿈.
 			arr[i][0] = tmp;
 
-			// 각 리그별 선수가 한명일때..
+			// 각 리그별 선수가 한명일때 중복 이동이 일어날수 있으므로 중복 제외하여 저장.
 			if (!isMove[arr[i - 1][m - 1].id]) {
 				isMove[arr[i - 1][m - 1].id] = true;
 				moveSum += arr[i - 1][m - 1].id;
@@ -103,19 +103,19 @@ class UserSolution {
 			}
 
 		}
-		sortMove();
+		sortMove(); // 이동후 각 리그별 조건에 맞게 저장.
 
 		return moveSum;
 	}
 
 	int trade() {
-		boolean[] isMove = new boolean[n];
-		int moveSum = 0;
+		boolean[] isMove = new boolean[n]; //이동한 선수 중복 저장 방지
+		int moveSum = 0; // 이동한 선수들의 id의 총합 
 		for (int i = 1; i < l; i++) {
 			Node mid = arr[i - 1][m / 2]; // 상위 리그 중간선수.
 			arr[i - 1][m / 2] = arr[i][0]; // 현재 리그 최고선수와 바꿈.
 			arr[i][0] = mid;
-			// 각 리그별 선수가 한명일때..
+			// 각 리그별 선수가 한명일때 중복 이동이 일어날수 있으므로 중복 제외하여 저장.
 			if (!isMove[arr[i - 1][m / 2].id]) {
 				isMove[arr[i - 1][m / 2].id] = true;
 				moveSum += arr[i - 1][m / 2].id;
@@ -126,17 +126,21 @@ class UserSolution {
 			}
 
 		}
-		sortTrade();
+		sortTrade(); //trade후 각 리그 조건에 맞게 정렬
 
 		return moveSum;
 	}
 
+	//나머지는 정렬이 된 상태이므로 두명만 정렬하면됨.
 	void sortMove() {
 		for (int i = 0; i < l; i++) {
-			Node downNode = arr[i][0];
-			Node upNode = arr[i][m - 1];
+			Node downNode = arr[i][0];// 상위 리그에서 내려온 선수
+			Node upNode = arr[i][m - 1]; // 하위 리그에서 올라온 선수
 			int downIndex = 0;
 			int upIndex = m - 1;
+
+			// 이동한 선수들만 정렬시키면 됨.
+			//내려온 선수는 현재 위치에서 오른쪽으로 이동하며 위치 찾아감.
 			while (downIndex < m - 1) {
 				if ((downNode.ability < arr[i][downIndex + 1].ability)
 						|| (downNode.ability == arr[i][downIndex + 1].ability
@@ -150,6 +154,7 @@ class UserSolution {
 			}
 			arr[i][downIndex] = downNode;
 
+			//올라온 선수는 왼쪽으로 이동하면서 위치 찾아감. 
 			while (upIndex > 0) {
 				if ((upNode.ability > arr[i][upIndex - 1].ability)
 						|| (upNode.ability == arr[i][upIndex - 1].ability && upNode.id < arr[i][upIndex - 1].id)) {
@@ -163,6 +168,8 @@ class UserSolution {
 		}
 	}// sortMove
 
+	
+	//나머지는 정렬된 상태이므로 트래이드한 선수 두명만 제자리를 찾아가면 됨.
 	void sortTrade() {
 		for (int i = 0; i < l; i++) {
 			Node downNode = arr[i][0];
@@ -183,6 +190,7 @@ class UserSolution {
 			}
 			arr[i][downIndex] = downNode;
 
+			//리그의 중간에 들어온 선수는 왼쪽선수와 바꿔야하는지 오른쪽선수와 바꿔야하는지 모르므로 둘다 함.
 			if (tradeIndex > 0 && tradeIndex < m - 1) {
 				if ((tradeNode.ability > arr[i][tradeIndex - 1].ability)
 						|| (tradeNode.ability == arr[i][tradeIndex - 1].ability
@@ -222,7 +230,8 @@ class UserSolution {
 		}
 
 	}
-
+	
+	//각 선수들의 id와 ability저장
 	class Node implements Comparable<Node> {
 		int id;
 		int ability;

@@ -1,0 +1,48 @@
+package com.ssafy.gu;
+
+import java.util.*;
+
+class Solution {
+    public int[] solution(String[] genres, int[] plays) {
+        Map<String, Integer> playsByGenre = new HashMap<>();
+        
+        for (int i = 0; i < genres.length; i++) {
+            if (playsByGenre.get(genres[i]) == null) {
+                playsByGenre.put(genres[i], plays[i]);
+            } else {
+                playsByGenre.put(genres[i], plays[i]+playsByGenre.get(genres[i]));
+            }
+        }
+        
+        List<Map.Entry<String, Integer>> genreSet = new ArrayList<>(playsByGenre.entrySet());
+        genreSet.sort((a, b) -> b.getValue() - a.getValue());
+        
+        List<Integer> selAllGenres = new ArrayList<>();
+        for (int i = 0; i < genreSet.size(); i++) {
+            int[] selPerGenre = new int[2];
+            Arrays.fill(selPerGenre, -1);
+            for (int j = 0; j < genres.length; j++) {
+                if (genres[j].equals(genreSet.get(i).getKey())) {
+                    if (selPerGenre[0] < 0) {
+                        selPerGenre[0] = j;
+                    } else if (plays[j] > plays[selPerGenre[0]]) {
+                        selPerGenre[1] = selPerGenre[0];
+                        selPerGenre[0] = j;
+                    } else if (selPerGenre[1] < 0 || plays[j] > plays[selPerGenre[1]]) {
+                        selPerGenre[1] = j;
+                    }
+                }
+            }
+            
+            for (int j = 0; j < 2; j++) {
+                if (selPerGenre[j] < 0) continue;
+                selAllGenres.add(selPerGenre[j]);
+            }
+        }
+        
+        int[] ans = new int[selAllGenres.size()];
+        for (int i = 0; i < selAllGenres.size(); i++) ans[i] = selAllGenres.get(i);
+
+        return ans;
+    }
+}

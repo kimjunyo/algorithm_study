@@ -1,0 +1,53 @@
+package com.ssafy.gu;
+
+class Solution {
+    static int[] sel;
+    static int[] mineralsToInt;
+    static int piro, min;
+    
+    public int solution(int[] picks, String[] minerals) {
+        mineralsToInt = new int[minerals.length];
+        
+        for (int i = 0; i < minerals.length; i++) {
+            if (minerals[i].charAt(0) == 'd') mineralsToInt[i] = 0;
+            if (minerals[i].charAt(0) == 'i') mineralsToInt[i] = 1;
+            if (minerals[i].charAt(0) == 's') mineralsToInt[i] = 2;
+        }
+        
+        sel = new int[Math.min((minerals.length/5 + 1), picks[0]+picks[1]+picks[2])];
+        
+        piro = 0;
+        min = Integer.MAX_VALUE;
+        perm(0, 0, picks);
+        
+        return min;
+    }
+    
+    static void perm(int idx, int piro, int[] picks) {
+        if (idx == sel.length) {
+            min = Math.min(min, piro);
+            return;
+        }
+        
+        for (int i = 0; i < 3; i++) {
+            if (picks[i] == 0) continue;
+            sel[idx] = i;
+            picks[i]--;
+            int piroAdd = 0;
+            for (int j = 0; j < 5; j++) {
+                if (j+5*idx == mineralsToInt.length) break;
+                if (sel[idx] == 0) piroAdd++;
+                else if (sel[idx] == 1) {
+                    if (mineralsToInt[j+5*idx] >= 1) piroAdd++;
+                    else piroAdd += 5;
+                } else if (sel[idx] == 2) {
+                    if (mineralsToInt[j+5*idx] == 2) piroAdd++;
+                    else if (mineralsToInt[j+5*idx] == 1) piroAdd += 5;
+                    else piroAdd += 25;
+                }
+            }
+            perm(idx+1, piro + piroAdd, picks);
+            picks[i]++;
+        }
+    }
+}

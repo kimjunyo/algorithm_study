@@ -25,7 +25,7 @@ public class 중첩점 {
 
 			write(x, y, direction);
 		}
-		int sum = 0;
+		long sum = 0;
 		for (int i = 1; i <= n; i++) {
 			for (int j = 1; j <= n; j++) {
 				if (arr[i][j] != null) {
@@ -74,9 +74,9 @@ public class 중첩점 {
 	}// write
 
 	static class Node {
-		int row, col;
+		long row, col;
 
-		Node(int row, int col) {
+		Node(long row, long col) {
 			this.row = row;
 			this.col = col;
 		}

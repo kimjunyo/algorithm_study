@@ -1,0 +1,58 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+
+	private static int N;
+	private static int M;
+	private static int[][][] recordMap;
+	//R L는 0번 D U는 1번
+	
+	private static void record(int x, int y, String dir){
+			int row = x;
+			int column = y;
+			if(dir.equals("R")){
+				for(int c = column; c<N; c++){
+					recordMap[row][c][0]++;
+				}
+			}else if(dir.equals("L")){
+				for(int c = column; c>=0; c--){
+					recordMap[row][c][0]++;
+				}
+			}else if(dir.equals("U")){
+				for(int r=row; r>=0; r--){
+					recordMap[r][column][1]++;
+				}
+			}else{ //D
+				for(int r=row; r<N; r++){
+					recordMap[r][column][1]++;
+				}
+			}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		recordMap = new int[N][N][2];
+
+		for(int i=0; i<M; i++){
+			st = new StringTokenizer(br.readLine());
+			int x = Integer.parseInt(st.nextToken())-1;
+			int y = Integer.parseInt(st.nextToken())-1;
+			String dir = st.nextToken();
+			record(x,y,dir);
+		}
+
+		long cnt = 0;
+		for(int i=0; i<N; i++){
+			for(int j=0; j<N; j++){
+				int a = recordMap[i][j][0];
+				int b = recordMap[i][j][1];
+				cnt += (long) a*b;
+			}
+		}
+		System.out.println(cnt);
+	}
+}

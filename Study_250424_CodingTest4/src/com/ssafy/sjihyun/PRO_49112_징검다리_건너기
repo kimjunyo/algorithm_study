@@ -1,0 +1,38 @@
+package com.ssafy.sjihyun;
+
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine());
+
+		int[] rock = new int[N];
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		for(int i=0; i<N; i++){
+			rock[i] = Integer.parseInt(st.nextToken());
+		}
+
+		int[] dp = new int[N];
+		dp[0] = rock[0];
+		dp[1] = rock[1];
+		dp[2] = rock[2];
+		
+		for(int i=3; i<N; i++){
+			int minPoison1 = rock[i] + dp[i-3];
+			int minPoison2 = rock[i] + dp[i-2];
+			int minPoison3 = rock[i] + dp[i-1];
+
+			int minPoison = Math.min(minPoison1, Math.min(minPoison2, minPoison3));
+			dp[i] = minPoison;
+		}
+
+		int result = 0;
+		int minResult1 = dp[N-3];
+		int minResult2 = dp[N-2];
+		int minResult3 = dp[N-1];
+		result = Math.min(minResult1, Math.min(minResult2, minResult3));
+		System.out.println(result);
+	}
+}

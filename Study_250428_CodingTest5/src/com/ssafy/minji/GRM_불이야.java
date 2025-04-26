@@ -2,7 +2,7 @@ package com.ssafy.minji;
 
 import java.io.*;
 import java.util.*;
-class GRM_불이야 {
+class GRM_불이야 { 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());

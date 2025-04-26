@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 // 못풀었어여
-public class CT_미생물연구 { 
+public class CT_미생물연구 {
     static int N;
     static int Q;
     static int[][] map;

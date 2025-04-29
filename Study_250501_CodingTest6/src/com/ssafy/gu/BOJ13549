@@ -1,0 +1,36 @@
+package com.ssafy.gu;
+
+import java.util.PriorityQueue;
+import java.util.Scanner;
+
+public class BOJ13549 {
+	static class Node {
+		int w, num;
+		public Node(int w, int num) {
+			this.w = w;
+			this.num = num;
+		}
+	}
+	
+	public static void main(String[] args) {
+		Scanner sc  = new Scanner(System.in);
+		int N = sc.nextInt();
+		int K = sc.nextInt();
+		
+		if (N > K) { System.out.println(N-K); return; }
+		
+		PriorityQueue<Node> pq = new PriorityQueue<>((a,b) -> a.w - b.w);
+		pq.add(new Node(0, N));
+		int time = 0;
+		while (!pq.isEmpty()) {
+			Node curr = pq.poll();
+
+			if (curr.num < K) {
+				pq.add(new Node(1, curr.num+1));
+				pq.add(new Node(0, curr.num*2));
+			}
+			pq.add(new Node(1, curr.num-1));
+		}
+	}
+	
+}

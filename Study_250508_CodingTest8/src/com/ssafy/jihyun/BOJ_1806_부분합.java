@@ -1,4 +1,4 @@
-package com.ssafy.sjihyun
+package com.ssafy.jihyun
 
 import java.io.*;
 import java.util.*;

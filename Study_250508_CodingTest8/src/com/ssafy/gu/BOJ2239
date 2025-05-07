@@ -1,0 +1,91 @@
+import java.util.*;
+import java.io.*;
+
+public class Main{
+  public static void main(String args[]) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int[][] sudoku = new int[9][9];
+
+    for (int i = 0; i < 9; i++) {
+      String row = br.readLine();
+      for (int j = 0; j < 9; j++) {
+        sudoku[i][j] = row.charAt(j) - '0';
+      }
+    }
+
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        if (sudoku[i][j] == 0) {
+          boolean[] visited = new boolean[10];
+          for (int r = 0; r < 9; r++) visited[sudoku[r][j]] = true;
+          for (int c = 0; c < 9; c++) visited[sudoku[i][c]] = true;
+          for (int k = i-i%3; k < i-i%3+3; k++) {
+            for (int l = j-j%3; l < j-j%3+3; l++) {
+              visited[sudoku[k][l]] = true;
+            }
+          }
+          
+          for (int n = 1; n <= 9; n++) {
+            if (visited[n]) continue;
+            fill(sudoku, i, j, n);
+          }
+        }
+      }
+    }
+    
+  }
+
+  static boolean isSolved = false;
+
+  static void fill(int[][] sudoku, int row, int col, int num) {
+    System.out.print(row);
+    System.out.print(col);
+    System.out.print(num);
+    System.out.println();
+    
+    sudoku[row][col] = num;
+    if (true) {
+      for (int a = 0; a < 5; a++) {
+            for (int b = 0; b < 9; b++) {
+              System.out.print(sudoku[a][b]);
+            }
+            System.out.println();
+          }
+    }
+    
+    
+
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        if (sudoku[i][j] == 0) {
+          boolean[] visited = new boolean[10];
+          for (int r = 0; r < 9; r++) visited[sudoku[r][j]] = true;
+          for (int c = 0; c < 9; c++) visited[sudoku[i][c]] = true;
+          for (int k = i-i%3; k < i-i%3+3; k++) {
+            for (int l = j-j%3; l < j-j%3+3; l++) {
+              visited[sudoku[k][l]] = true;
+            }
+          }
+          
+          for (int n = 1; n <= 9; n++) {
+            if (!visited[n]) {
+              fill(sudoku, i, j, n);
+              if (isSolved) return;
+            } else if (n == 9) return;
+          }
+        }
+
+        if (i == 8 && j == 8) {
+          for (int k = 0; k < 9; k++) {
+            for (int l = 0; l < 9; l++) {
+              System.out.print(sudoku[k][l]);
+            }
+            System.out.println();
+          }
+          isSolved = true;
+          return;
+        }
+      }
+    }
+  }
+}

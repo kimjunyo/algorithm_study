@@ -1,0 +1,55 @@
+import java.util.*;
+import java.io.*;
+
+public class Main{
+  static class Node {
+    int num, preSum;
+    Node(int num, int preSum) {
+      this.num = num;
+      this.preSum = preSum;
+    }
+  }
+  
+  public static void main(String args[]) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int T = Integer.parseInt(br.readLine());
+    for (int t = 0; t < T; t++) {
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      int N = Integer.parseInt(st.nextToken());
+      int K = Integer.parseInt(st.nextToken());
+      int[] time = new int[N+1];
+      List<Integer>[] adj = new ArrayList[N+1];
+      for (int i = 1; i <= N; i++) adj[i] = new ArrayList<>();
+      st = new StringTokenizer(br.readLine());
+      for (int i = 1; i <= N; i++) time[i] = Integer.parseInt(st.nextToken());
+      for (int i = 0; i < K; i++) {
+        st = new StringTokenizer(br.readLine());
+        adj[Integer.parseInt(st.nextToken())].add(Integer.parseInt(st.nextToken()));
+      }
+      int W = Integer.parseInt(br.readLine());
+
+      Queue<Node> q = new ArrayDeque<>();
+      Node[] nodes = new Node[N+1];
+      int init = 0;
+      if (adj[1].size() == 0) init = N;
+      else init = 1;
+      nodes[init] = new Node(init, time[init]);
+      q.add(nodes[init]);
+      while (!q.isEmpty()) {
+        Node curr = q.poll();
+        for (int i = 0; i < adj[curr.num].size(); i++) {
+          int next = adj[curr.num].get(i);
+          Node node = new Node(next, curr.preSum+time[next]);
+          if (nodes[next] == null || nodes[next].preSum < node.preSum) {
+            nodes[next] = node;
+            q.add(node);
+          }
+        }
+      }
+      int ans = 0;
+      if (nodes[W] == null) ans = time[W];
+      else ans = nodes[W].preSum;
+      System.out.println(ans);
+    }
+  }
+}

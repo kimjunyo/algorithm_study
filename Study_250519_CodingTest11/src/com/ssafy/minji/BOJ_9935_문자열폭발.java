@@ -3,8 +3,6 @@ package com.ssafy.minji;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
 
 public class BOJ_9935_문자열폭발 {
@@ -52,11 +50,8 @@ public class BOJ_9935_문자열폭발 {
 		
 		char expCh = exp.charAt(idx);
 		char strCh = stk.peek();
-		System.out.println(expCh + ", " + strCh);
 		if(expCh == strCh) {
-			System.out.println(stk);
 			temp.add(stk.pop());
-			System.out.println(temp);
 			check(idx - 1);
 		}else {
 			return;

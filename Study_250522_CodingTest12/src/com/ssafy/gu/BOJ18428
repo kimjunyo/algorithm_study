@@ -1,0 +1,94 @@
+package com.ssafy.gu;
+
+import java.util.*;
+import java.io.*;
+
+public class BOJ18428{
+  public static void main(String args[]) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int N = Integer.parseInt(br.readLine());
+    String[][] isle = new String[N][N];
+    for (int i = 0; i < N; i++) {
+      StringTokenizer st = new StringTokenizer(br.readLine());
+      for (int j = 0; j < N; j++) {
+        isle[i][j] = st.nextToken();
+      }
+    }
+
+    int[] dr = {-1, 1, 0, 0};
+    int[] dc = {0, 0, -1, 1};
+    int objCnt = 0;
+    for (int r = 0; r < N; r++) {
+      for (int c = 0; c < N; c++) {
+        if (isle[r][c].equals("T")) {
+          for (int d = 0; d < 4; d++) {
+            int nr = r + dr[d];
+            int nc = c + dc[d];
+
+            if (dc[d] == 0) {
+              if (nr < 0 || nr == N) continue;
+              while (nr >= 0 && nr < N && !isle[nr][nc].equals("S") && !isle[nr][nc].equals("O")) {
+                nr += dr[d];
+              }
+              if (nr == r + dr[d]) {
+                System.out.print("NO");
+                return;
+              }
+              if (nr < 0 || nr == N || isle[nr][nc].equals("O")) continue;
+            }
+            
+            if (dr[d] == 0) {
+              if (nc < 0 || nc == N) continue;
+              while (nc >= 0 && nc < N && !isle[nr][nc].equals("S") && !isle[nr][nc].equals("O")) {
+                nc += dc[d];
+              }
+              if (nc == c + dc[d]) {
+                System.out.print("NO");
+                return;
+              }
+              if (nc < 0 || nc == N || isle[nr][nc].equals("O")) continue;
+            }
+
+            if (isle[nr][nc].equals("S")) {
+              int sr = r + dr[d];
+              int sc = c + dc[d];
+              int er = nr - dr[d];
+              int ec = nc - dc[d];
+
+              int sCnt = 0;
+              int nsr = sr;
+              int nsc = sc;
+              for (int e = 0; e < 4; e++) {
+                nsr = sr + dr[e];
+                nsc = sc + dc[e];
+
+                if (nsr < 0 || nsr == N || nsc < 0 || nsc == N) continue;
+                else if (!isle[nsr][nsc].equals("X")) sCnt++;
+              }
+
+              int eCnt = 0;
+              int ner = er;
+              int nec = ec;
+              for (int e = 0; e < 4; e++) {
+                ner = er + dr[e];
+                nec = ec + dc[e];
+
+                if (ner < 0 || ner == N || nec < 0 || nec == N) continue;
+                else if (!isle[ner][nec].equals("X")) eCnt++;
+              }
+
+              if (sCnt > eCnt) isle[nsr][nsc] = "O";
+              else isle[ner][nec] = "O";
+              
+              if (++objCnt == 4) {
+                System.out.print("NO");
+                return;
+              }
+            }
+          } 
+        }
+      }
+    }
+    System.out.print("YES");
+  }
+}

@@ -1,3 +1,5 @@
+package com.ssafy.gu;
+
 import java.util.*;
 import java.io.*;
 
